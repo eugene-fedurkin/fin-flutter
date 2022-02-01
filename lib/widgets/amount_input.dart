@@ -9,11 +9,29 @@ class AmountInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-        child: Wrap(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextFormField(
-          controller: controller,
-          autofocus: true,
+        Container(
+            alignment: Alignment.center,
+            width: 150,
+            child: TextFormField(
+                controller: controller,
+                autofocus: true,
+                cursorColor: Colors.green,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
+                  contentPadding: EdgeInsets.only(left: 15, right: 15),
+                ))),
+        Text(
+          'BYN',
+          style: TextStyle(fontSize: 18, color: Colors.green),
         )
       ],
     ));
