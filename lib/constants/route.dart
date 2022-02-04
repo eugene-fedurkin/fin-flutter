@@ -1,0 +1,1 @@
+const AMOUNTS_ROUTE = '/amounts';

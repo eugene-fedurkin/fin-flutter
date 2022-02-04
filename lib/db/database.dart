@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
-  static Database _database;
+  static Database? _database;
 
   String costTable = 'Const';
   String columnId = 'id';
@@ -15,34 +15,36 @@ class DBProvider {
   String columnDate = 'date';
   String columnSum = 'sum';
 
-  Future<Database> get database async {
-    if (_database != null) {
-      return _database;
-    }
-
-    _database = await _initDB();
-
-    return _database;
-  }
+  Future<Database> get database async => _database ??= await _initDB();
 
   Future<Database> _initDB() async {
     Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + 'Const.db';
+    String path = dir.path + 'Cost.db';
 
     return await openDatabase(path, version: 1, onCreate: _createDb);
   }
 
   void _createDb(Database db, int version) async {
-    await db.execute('CREATE TABLE $costTable($columnId INTEGER PRIMARY KEY AUTOINCCREMENT, $columnName Text, $columnSum INTEGER, $columnDate DATETIME)');
+    await db.execute('CREATE TABLE $costTable($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnName Text, $columnSum INTEGER, $columnDate DATETIME)');
   }
 
-  Future<List<Cost>> getCosts() async {
+  Future<List<Cost>> getCosts(bool sum) async {
     Database db = await this.database;
     final List<Map<String, dynamic>> costMapList = await db.query(costTable);
     final List<Cost> costList = [];
 
     costMapList.forEach((cost) {
-      costList.add(Cost.fromMap(cost));
+      final costModel = Cost.fromMap(cost);
+      if (sum == true) {
+        try {
+          final savedModel = costList.firstWhere((element) => element.name == costModel.name);
+          savedModel.sum += costModel.sum;
+        } catch(e) {
+          costList.add(costModel);
+        }
+      } else {
+        costList.add(costModel);
+      }
     });
 
     return costList;

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:organizer/api/categories_api.dart';
+import 'package:organizer/constants/route.dart';
+import 'package:organizer/db/database.dart';
 import 'package:organizer/models/category.dart';
+import 'package:organizer/models/cost.dart';
 import 'package:organizer/providers/shared_state.dart';
 import 'package:organizer/widgets/amount_input.dart';
 import 'package:organizer/widgets/categoies.dart';
@@ -32,19 +35,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var sharedState = Provider.of<SharedState>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: const Text('Money'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.my_location),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.my_location),
+        //   onPressed: () {},
+        // ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.location_city),
-            onPressed: () {},
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, AMOUNTS_ROUTE);
+            },
           )
         ],
       ),
@@ -54,13 +61,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             Column(
               children: [
                 AmountInput(controller: _inputController),
-                // TextFormField(
-                //   controller: _inputController,
-
-                // ),
                 Categories(categories: categories),
-                Text('2'),
-                Text('3'),
               ],
             ),
           ],
@@ -68,10 +69,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          print(_inputController.text);
+          final categoryName = sharedState.activeCategory?.name;
+
+          if (categoryName != null) {
+            DBProvider.db.insertCost(
+              Cost(
+                new DateTime.now(),
+                categoryName,
+                int.parse(_inputController.text),
+                null
+              )
+            );
+
+            _inputController.text = '';
+          }
         },
         icon: const Icon(Icons.edit),
-        label: const Text('Edit'),
+        label: const Text('Add Amount'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
