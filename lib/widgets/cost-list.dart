@@ -42,20 +42,24 @@ class _CostListState extends State<CostList> {
               final category = categories
                   .firstWhere((element) => element.name == data[index].name);
 
-                  // return Card(
-
-                  // );
-
-              return ListTile(
-                title: Text(data[index].name),
-                trailing: Text('${data[index].sum} Br'),
-                leading: Container(
-                  child: Icon(category.icon),
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: category.color,
-                  )
+              return Card(
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Container(
+                          child: Icon(category.icon, color: Colors.white, size: 28,),
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: category.color,
+                          )),
+                      Text(data[index].name, style: TextStyle(fontSize: 16),),
+                      const Spacer(),
+                      Text('${data[index].sum} Br')
+                    ],
+                  ),
                 ),
               );
             },

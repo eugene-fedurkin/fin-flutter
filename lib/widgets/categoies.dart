@@ -54,8 +54,8 @@ class CategoryTile extends StatelessWidget {
           children: [
             Container(
                 child: Icon(category.icon, color: Colors.white, size: 50,),
-                padding: EdgeInsets.all(15),
-                margin: EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.all(15),
+                margin: const EdgeInsets.only(bottom: 5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: category.color,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:organizer/widgets/amount_chart.dart';
 import 'package:organizer/widgets/cost-list.dart';
 
 class Amounts extends StatelessWidget {
@@ -10,13 +11,15 @@ class Amounts extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: const Text('Balance')
+        title: const Text('Balance'),
+        centerTitle: true,
       ),
       body: Container(
         child: Wrap(
           children: [
             Column(
               children: [
+                AmountChart(),
                 CostList()
               ],
             ),
