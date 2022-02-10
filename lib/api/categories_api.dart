@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:organizer/models/category.dart';
-import 'package:organizer/utils/constants.dart';
-import 'package:http/http.dart' as http;
+// import 'package:organizer/utils/constants.dart';
+// import 'package:http/http.dart' as http;
 
 class CategoriesApi {
   List<Category> fetchCategories() {

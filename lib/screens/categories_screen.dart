@@ -47,25 +47,31 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         //   onPressed: () {},
         // ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushNamed(context, AMOUNTS_ROUTE);
-            },
-          )
+          PopupMenuButton(
+            onSelected: (String result) { setState(() { Navigator.pushNamed(context, result); }); },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: AMOUNTS_ROUTE,
+                child: Text('Total'),
+              ),
+              const PopupMenuItem(
+                value: TRANSACTIONS_ROUTE,
+                child: Text('Transactions'),
+              )
+            ]
+
+          ),
         ],
       ),
-      body: Container(
-        child: Wrap(
-          children: [
-            Column(
-              children: [
-                AmountInput(controller: _inputController),
-                Categories(categories: categories),
-              ],
-            ),
-          ],
-        ),
+      body: Wrap(
+        children: [
+          Column(
+            children: [
+              AmountInput(controller: _inputController),
+              Categories(categories: categories),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -74,7 +80,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           if (categoryName != null) {
             DBProvider.db.insertCost(
               Cost(
-                new DateTime.now(),
+                DateTime.now(),
                 categoryName,
                 int.parse(_inputController.text),
                 null

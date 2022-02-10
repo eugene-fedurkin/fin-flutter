@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AmountInput extends StatelessWidget {
@@ -29,7 +28,7 @@ class AmountInput extends StatelessWidget {
                   ),
                   contentPadding: EdgeInsets.only(left: 15, right: 15),
                 ))),
-        Text(
+        const Text(
           'BYN',
           style: TextStyle(fontSize: 18, color: Colors.green),
         )

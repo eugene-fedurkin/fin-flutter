@@ -60,39 +60,37 @@ class _AmountChartState extends State<AmountChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: PieChart(
-        key: ValueKey(0),
-        dataMap: dataMap,
-        animationDuration: Duration(milliseconds: 800),
-        chartLegendSpacing: 32,
-        chartRadius: MediaQuery.of(context).size.width / 3.2 > 300
-            ? 300
-            : MediaQuery.of(context).size.width / 3.2,
-        colorList: colorList.isNotEmpty ? colorList : defaultColorList,
-        initialAngleInDegree: 0,
-        chartType: ChartType.ring,
-        centerText: 'Amount',
-        legendOptions: const LegendOptions(
-          showLegends: false,
-          legendTextStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+    return PieChart(
+      key: const ValueKey(0),
+      dataMap: dataMap,
+      animationDuration: const Duration(milliseconds: 800),
+      chartLegendSpacing: 32,
+      chartRadius: MediaQuery.of(context).size.width / 3.2 > 300
+          ? 300
+          : MediaQuery.of(context).size.width / 3.2,
+      colorList: colorList.isNotEmpty ? colorList : defaultColorList,
+      initialAngleInDegree: 0,
+      chartType: ChartType.ring,
+      centerText: 'Amount',
+      legendOptions: const LegendOptions(
+        showLegends: false,
+        legendTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
         ),
-        chartValuesOptions: const ChartValuesOptions(
-          showChartValueBackground: true,
-          showChartValues: true,
-          showChartValuesInPercentage: true,
-          showChartValuesOutside: false,
-        ),
-        // ringStrokeWidth: _ringStrokeWidth!,
-        // emptyColor: Colors.grey,
-        // gradientList: _showGradientColors ? gradientList : null,
-        // emptyColorGradient: [
-        //   Color(0xff6c5ce7),
-        //   Colors.blue,
-        // ],
       ),
+      chartValuesOptions: const ChartValuesOptions(
+        showChartValueBackground: true,
+        showChartValues: true,
+        showChartValuesInPercentage: true,
+        showChartValuesOutside: false,
+      ),
+      // ringStrokeWidth: _ringStrokeWidth!,
+      // emptyColor: Colors.grey,
+      // gradientList: _showGradientColors ? gradientList : null,
+      // emptyColorGradient: [
+      //   Color(0xff6c5ce7),
+      //   Colors.blue,
+      // ],
     );
   }
 }

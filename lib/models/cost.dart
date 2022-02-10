@@ -1,5 +1,3 @@
-import 'package:organizer/models/category.dart';
-
 class Cost {
   late int? id;
   late DateTime date;
@@ -9,7 +7,7 @@ class Cost {
   Cost(this.date, this.name, this.sum, this.id);
 
   Map<String, dynamic> toMap() {
-    final map = Map<String, dynamic>();
+    final map = <String, dynamic>{};
     map['id'] = id;
     map['date'] = date.microsecondsSinceEpoch;
     map['name'] = name;

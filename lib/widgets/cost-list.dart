@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:organizer/api/categories_api.dart';
 import 'package:organizer/db/database.dart';
@@ -6,7 +7,9 @@ import 'package:organizer/models/category.dart';
 import 'package:organizer/models/cost.dart';
 
 class CostList extends StatefulWidget {
-  const CostList({Key? key}) : super(key: key);
+  final bool sum;
+
+  const CostList({Key? key, required this.sum}) : super(key: key);
 
   @override
   _CostListState createState() => _CostListState();
@@ -21,7 +24,8 @@ class _CostListState extends State<CostList> {
     super.initState();
 
     categories = CategoriesApi().fetchCategories();
-    costs = DBProvider.db.getCosts(true);
+    costs = DBProvider.db.getCosts(widget.sum);
+    print(widget.sum)
   }
 
   @override
@@ -32,7 +36,7 @@ class _CostListState extends State<CostList> {
           final data = projectSnap.data;
 
           if (data == null) {
-            return Text('No Data');
+            return const Text('No Data');
           }
 
           return ListView.builder(
@@ -48,14 +52,21 @@ class _CostListState extends State<CostList> {
                   child: Row(
                     children: [
                       Container(
-                          child: Icon(category.icon, color: Colors.white, size: 28,),
+                          child: Icon(
+                            category.icon,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(right: 10),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: category.color,
                           )),
-                      Text(data[index].name, style: TextStyle(fontSize: 16),),
+                      Text(
+                        data[index].name,
+                        style: const TextStyle(fontSize: 16),
+                      ),
                       const Spacer(),
                       Text('${data[index].sum} Br')
                     ],

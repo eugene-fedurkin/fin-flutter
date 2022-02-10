@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:organizer/widgets/amount_chart.dart';
 import 'package:organizer/widgets/cost-list.dart';
 
-class Amounts extends StatelessWidget {
-  const Amounts({ Key? key }) : super(key: key);
+class Transactions extends StatelessWidget {
+  const Transactions({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: const Text('Total'),
+        title: const Text('Transactions'),
         centerTitle: true,
       ),
       body: Wrap(
@@ -18,7 +18,7 @@ class Amounts extends StatelessWidget {
           Column(
             children: const [
               AmountChart(),
-              CostList(sum: true,)
+              CostList(sum: false,)
             ],
           ),
         ],

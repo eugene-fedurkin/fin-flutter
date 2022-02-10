@@ -11,12 +11,12 @@ class Categories extends StatelessWidget {
 
  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 300,
         child: GridView.builder(
           itemCount: categories.length,
           gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) {
             return GridTile(
                 child: CategoryTile(

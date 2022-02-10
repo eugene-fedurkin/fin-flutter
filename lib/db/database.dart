@@ -29,7 +29,7 @@ class DBProvider {
   }
 
   Future<List<Cost>> getCosts(bool sum) async {
-    Database db = await this.database;
+    Database db = await database;
     final List<Map<String, dynamic>> costMapList = await db.query(costTable);
     final List<Cost> costList = [];
 
@@ -51,14 +51,14 @@ class DBProvider {
   }
 
   Future<Cost> insertCost(Cost cost) async {
-    Database db = await this.database;
+    Database db = await database;
     cost.id = await db.insert(costTable, cost.toMap());
 
     return cost;
   }
 
   Future<int> updateCost(Cost cost) async {
-    Database db = await this.database;
+    Database db = await database;
     return await db.update(
       costTable,
       cost.toMap(),
@@ -68,7 +68,7 @@ class DBProvider {
   }
 
   Future<int> deleteCost(int id) async {
-    Database db = await this.database;
+    Database db = await database;
     return await db.delete(
       costTable,
       where: '$columnId = ?',
