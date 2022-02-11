@@ -1,36 +1,32 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:organizer/api/categories_api.dart';
 import 'package:organizer/db/database.dart';
 import 'package:organizer/models/category.dart';
-import 'package:organizer/models/cost.dart';
+import 'package:organizer/models/transaction.dart';
 
-class CostList extends StatefulWidget {
-  final bool sum;
-
-  const CostList({Key? key, required this.sum}) : super(key: key);
-
+class TransactionList extends StatefulWidget {
   @override
-  _CostListState createState() => _CostListState();
+  _TransactionListState createState() => _TransactionListState();
 }
 
-class _CostListState extends State<CostList> {
-  late Future<List<Cost>> costs;
-  late List<Category> categories;
+class _TransactionListState extends State<TransactionList> {
+  late Future<List<TransactionModel>> costs;
+  late List<CategoryModel> categories;
+  final formatter = DateFormat('MMM d, y');
 
   @override
   void initState() {
     super.initState();
 
     categories = CategoriesApi().fetchCategories();
-    costs = DBProvider.db.getCosts(widget.sum);
-    print(widget.sum)
+    costs = DBProvider.db.getTransaction(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Cost>>(
+    return FutureBuilder<List<TransactionModel>>(
         future: costs,
         builder: (context, projectSnap) {
           final data = projectSnap.data;
@@ -39,12 +35,23 @@ class _CostListState extends State<CostList> {
             return const Text('No Data');
           }
 
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: data.length,
-            itemBuilder: (context, index) {
+          return GroupedListView<TransactionModel, String>(
+            elements: data,
+            groupBy: (element) => formatter.format(element.date),
+            groupSeparatorBuilder: (String groupByValue) => Container(
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                child: Container(
+                  child: Text('$groupByValue${formatter.format(DateTime.now()) == groupByValue ? ' (Today)' : ''}'),
+                  padding: const EdgeInsets.only(
+                      top: 3, bottom: 3, left: 15, right: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.cyan.shade50),
+                )),
+            itemBuilder: (context, element) {
               final category = categories
-                  .firstWhere((element) => element.name == data[index].name);
+                  .firstWhere((element) => element.name == element.name);
 
               return Card(
                 child: Container(
@@ -64,11 +71,11 @@ class _CostListState extends State<CostList> {
                             color: category.color,
                           )),
                       Text(
-                        data[index].name,
+                        element.name,
                         style: const TextStyle(fontSize: 16),
                       ),
                       const Spacer(),
-                      Text('${data[index].sum} Br')
+                      Text('${element.sum} Br')
                     ],
                   ),
                 ),

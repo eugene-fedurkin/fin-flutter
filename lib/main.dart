@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:organizer/constants/route.dart';
+import 'package:organizer/utils/route.dart';
 import 'package:organizer/providers/shared_state.dart';
-import 'package:organizer/screens/amounts_screen.dart';
+import 'package:organizer/screens/total_screen.dart';
 import 'package:organizer/screens/categories_screen.dart';
 import 'package:organizer/screens/transactions_screen.dart';
 import 'package:provider/provider.dart';

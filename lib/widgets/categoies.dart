@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class Categories extends StatelessWidget {
   const Categories({Key? key, required this.categories}) : super(key: key);
 
-  final List<Category> categories;
+  final List<CategoryModel> categories;
 
  @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class Categories extends StatelessWidget {
 }
 
 class CategoryTile extends StatelessWidget {
-  final Category category;
+  final CategoryModel category;
 
   const CategoryTile({Key? key, required this.category}) : super(key: key);
 

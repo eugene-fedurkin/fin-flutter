@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:organizer/api/categories_api.dart';
 import 'package:organizer/db/database.dart';
 import 'package:organizer/models/category.dart';
-import 'package:organizer/models/cost.dart';
+import 'package:organizer/models/transaction.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class AmountChart extends StatefulWidget {
-  const AmountChart({Key? key}) : super(key: key);
+class DonutChart extends StatefulWidget {
+  const DonutChart({Key? key}) : super(key: key);
 
   @override
-  _AmountChartState createState() => _AmountChartState();
+  _DonutChartState createState() => _DonutChartState();
 }
 
-class _AmountChartState extends State<AmountChart> {
-  late Future<List<Cost>> costs;
-  late List<Category> categories;
+class _DonutChartState extends State<DonutChart> {
+  late Future<List<TransactionModel>> costs;
+  late List<CategoryModel> categories;
 
   var dataMap = <String, double>{
     "Flutter": 5,
@@ -46,7 +46,7 @@ class _AmountChartState extends State<AmountChart> {
   initData() async {
     Map<String, double> data = { };
     colorList = [];
-    final costs = await DBProvider.db.getCosts(true);
+    final costs = await DBProvider.db.getTransaction(true);
     costs.forEach((element) {
       data[element.name] = element.sum.toDouble();
       final category = categories.firstWhere((cat) => cat.name == element.name);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:organizer/api/categories_api.dart';
-import 'package:organizer/constants/route.dart';
+import 'package:organizer/utils/route.dart';
 import 'package:organizer/db/database.dart';
 import 'package:organizer/models/category.dart';
-import 'package:organizer/models/cost.dart';
+import 'package:organizer/models/transaction.dart';
 import 'package:organizer/providers/shared_state.dart';
 import 'package:organizer/widgets/amount_input.dart';
 import 'package:organizer/widgets/categoies.dart';
@@ -17,7 +17,7 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  late List<Category> categories;
+  late List<CategoryModel> categories;
   final _inputController = TextEditingController();
 
   @override
@@ -78,8 +78,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           final categoryName = sharedState.activeCategory?.name;
 
           if (categoryName != null) {
-            DBProvider.db.insertCost(
-              Cost(
+            DBProvider.db.insertTransaction(
+              TransactionModel(
                 DateTime.now(),
                 categoryName,
                 int.parse(_inputController.text),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:organizer/widgets/amount_chart.dart';
-import 'package:organizer/widgets/cost-list.dart';
+import 'package:organizer/widgets/donut_chart.dart';
+import 'package:organizer/widgets/transaction-list.dart';
 
 class Transactions extends StatelessWidget {
-  const Transactions({ Key? key }) : super(key: key);
+  const Transactions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +13,13 @@ class Transactions extends StatelessWidget {
         title: const Text('Transactions'),
         centerTitle: true,
       ),
-      body: Wrap(
+      body: Column(
         children: [
-          Column(
-            children: const [
-              AmountChart(),
-              CostList(sum: false,)
-            ],
+          const SizedBox(height: 10,),
+          const DonutChart(),
+          const SizedBox(height: 10,),
+          Expanded(
+            child: TransactionList()
           ),
         ],
       ),

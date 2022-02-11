@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:organizer/models/category.dart';
 
 class SharedState extends ChangeNotifier {
-  Category? activeCategory;
+  CategoryModel? activeCategory;
 
-  void selectCategory(Category category) {
+  void selectCategory(CategoryModel category) {
     activeCategory = category;
 
     notifyListeners();

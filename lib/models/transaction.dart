@@ -1,10 +1,10 @@
-class Cost {
+class TransactionModel {
   late int? id;
   late DateTime date;
   late String name;
   late int sum;
 
-  Cost(this.date, this.name, this.sum, this.id);
+  TransactionModel(this.date, this.name, this.sum, this.id);
 
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{};
@@ -16,7 +16,7 @@ class Cost {
     return map;
   }
 
-  Cost.fromMap(Map<String, dynamic>map) {
+  TransactionModel.fromMap(Map<String, dynamic>map) {
     id = map['id'];
     date = DateTime.fromMicrosecondsSinceEpoch(map['date']);
     name = map['name'];

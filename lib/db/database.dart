@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:organizer/models/cost.dart';
+import 'package:organizer/models/transaction.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,16 +25,16 @@ class DBProvider {
   }
 
   void _createDb(Database db, int version) async {
-    await db.execute('CREATE TABLE $costTable($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnName Text, $columnSum INTEGER, $columnDate DATETIME)');
+    await db.execute('CREATE TABLE $costTable($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnName Text, $columnSum INTEGER, $columnDate INTEGER)');
   }
 
-  Future<List<Cost>> getCosts(bool sum) async {
+  Future<List<TransactionModel>> getTransaction(bool sum) async {
     Database db = await database;
-    final List<Map<String, dynamic>> costMapList = await db.query(costTable);
-    final List<Cost> costList = [];
+    final List<Map<String, dynamic>> costMapList = await db.query(costTable, orderBy: '$columnDate DESC');
+    final List<TransactionModel> costList = [];
 
     costMapList.forEach((cost) {
-      final costModel = Cost.fromMap(cost);
+      final costModel = TransactionModel.fromMap(cost);
       if (sum == true) {
         try {
           final savedModel = costList.firstWhere((element) => element.name == costModel.name);
@@ -50,24 +50,24 @@ class DBProvider {
     return costList;
   }
 
-  Future<Cost> insertCost(Cost cost) async {
+  Future<TransactionModel> insertTransaction(TransactionModel transaction) async {
     Database db = await database;
-    cost.id = await db.insert(costTable, cost.toMap());
+    transaction.id = await db.insert(costTable, transaction.toMap());
 
-    return cost;
+    return transaction;
   }
 
-  Future<int> updateCost(Cost cost) async {
+  Future<int> updateTransaction(TransactionModel transaction) async {
     Database db = await database;
     return await db.update(
       costTable,
-      cost.toMap(),
+      transaction.toMap(),
       where: '$columnId = ?',
-      whereArgs: [cost.id]
+      whereArgs: [transaction.id]
     );
   }
 
-  Future<int> deleteCost(int id) async {
+  Future<int> deleteTransaction(int id) async {
     Database db = await database;
     return await db.delete(
       costTable,
@@ -75,4 +75,6 @@ class DBProvider {
       whereArgs: [id]
     );
   }
+
+
 }
