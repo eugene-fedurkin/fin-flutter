@@ -22,7 +22,7 @@ class _TotalListState extends State<TotalList> {
     super.initState();
 
     categories = CategoriesApi().fetchCategories();
-    costs = DBProvider.db.getTransaction(true);
+    costs = DBProvider.db.getTransactions(true);
   }
 
   @override

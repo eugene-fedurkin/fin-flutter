@@ -46,7 +46,7 @@ class _DonutChartState extends State<DonutChart> {
   initData() async {
     Map<String, double> data = { };
     colorList = [];
-    final costs = await DBProvider.db.getTransaction(true);
+    final costs = await DBProvider.db.getTransactions(true);
     costs.forEach((element) {
       data[element.name] = element.sum.toDouble();
       final category = categories.firstWhere((cat) => cat.name == element.name);

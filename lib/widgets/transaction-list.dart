@@ -12,7 +12,7 @@ class TransactionList extends StatefulWidget {
 }
 
 class _TransactionListState extends State<TransactionList> {
-  late Future<List<TransactionModel>> costs;
+  late Future<List<TransactionModel>> transactions;
   late List<CategoryModel> categories;
   final formatter = DateFormat('MMM d, y');
 
@@ -21,13 +21,13 @@ class _TransactionListState extends State<TransactionList> {
     super.initState();
 
     categories = CategoriesApi().fetchCategories();
-    costs = DBProvider.db.getTransaction(false);
+    transactions = DBProvider.db.getTransactions(false);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<TransactionModel>>(
-        future: costs,
+        future: transactions,
         builder: (context, projectSnap) {
           final data = projectSnap.data;
 
@@ -51,7 +51,7 @@ class _TransactionListState extends State<TransactionList> {
                 )),
             itemBuilder: (context, element) {
               final category = categories
-                  .firstWhere((element) => element.name == element.name);
+                  .firstWhere((cat) => cat.name == element.name);
 
               return Card(
                 child: Container(
